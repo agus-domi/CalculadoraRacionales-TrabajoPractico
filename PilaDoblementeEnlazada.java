@@ -1,40 +1,61 @@
 public class PilaDoblementeEnlazada<T> implements Pila<T> {
 
-    private NodoPila<T> inicio;
-    private NodoPila<T> fin;
+  private NodoPila<T> inicio;
+  private NodoPila<T> fin;
 
-    PilaDoblementeEnlazada() {
-        this.inicio = null;
-        this.fin = null;
+  PilaDoblementeEnlazada() {
+    this.inicio = null;
+    this.fin = null;
+  }
+
+  @Override
+  public boolean esVacia() {
+    return this.inicio == null && this.fin == null;
+  }
+
+  @Override
+  public T tope() throws IllegalStateException {
+    if (esVacia()) {
+      throw new IllegalStateException("La Pila esVacia");
     }
+    return this.fin.getItem();
+  }
 
-    @Override
-    public boolean esVacia() {
-        return this.inicio == null && this.fin == null;
+  @Override
+  public void apilar(T elem) throws IllegalStateException {
+    if (esVacia()) {
+      NodoPila<T> nodo = new NodoPila<T>(null, elem, null);
+      this.inicio = nodo;
+      this.fin = nodo;
+    } else {
+      NodoPila<T> nodo = new NodoPila<T>(this.fin, elem, null);
+      this.fin.setNext(nodo);
+      this.fin = nodo;
     }
+  }
 
-    @Override
-    public T tope() throws IllegalStateException {
-        // TODO Implementar este método y eliminar la línea siguiente
-        throw new UnsupportedOperationException("Unimplemented method 'tope'");
+  @Override
+  public T desapilar() throws IllegalStateException {
+    if (esVacia()) {
+      throw new IllegalStateException("La Pila esVacia");
     }
-
-    @Override
-    public void apilar(T elem) throws IllegalStateException {
-        // TODO Implementar este método y eliminar la línea siguiente
-        throw new UnsupportedOperationException("Unimplemented method 'apilar'");
+    T ultimo = this.fin.getItem();
+    if (inicio == fin) {
+      this.fin = null;
+      this.inicio = null;
+    } else {
+      this.fin = fin.getPrev();
+      this.fin.setNext(null);
     }
+    return ultimo;
+  }
 
-    @Override
-    public T desapilar() throws IllegalStateException {
-        // TODO Implementar este método y eliminar la línea siguiente
-        throw new UnsupportedOperationException("Unimplemented method 'desapilar'");
+  @Override
+  public void imprimir() {
+    NodoPila<T> nodo = this.fin;
+    while (nodo != null) {
+      System.out.println(nodo.getItem());
+      nodo = nodo.getPrev();
     }
-
-    @Override
-    public void imprimir() {
-        // TODO Implementar este método y eliminar la línea siguiente
-        throw new UnsupportedOperationException("Unimplemented method 'imprimir'");
-    }
-
+  }
 }
