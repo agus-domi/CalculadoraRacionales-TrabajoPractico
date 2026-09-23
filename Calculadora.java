@@ -46,7 +46,7 @@ public class Calculadora {
                 pila.apilar(new RacionalNum(Integer.parseInt(denm[0]), Integer.parseInt(denm[1])));
             }
             else {
-                pila.apilar(new RacionaNum(Integer.parseInt(car),1));
+                pila.apilar(new RacionalNum(Integer.parseInt(car),1));
             }
         }
         return pila.desapilar();
