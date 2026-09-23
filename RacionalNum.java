@@ -29,7 +29,54 @@ public class RacionalNum implements Racional{
         
         this.numerador = nuevoNum;
         this.denominador = nuevoDen;
-
+        }
+        
     }
-    public void mult(Racional r)
+    public void mult(Racional r){
+        RacionalNum a=(RacionalNum) r;
+        this.numerador = this.numerador * a.numerador;
+        this.denominador = this.denominador * a.denominador;
+        this.simplificarFraccion();
+        
+    }
+    public void neg(){
+
+        this.numerador *= -1;
+    }
+    public void div(Racional r){
+        RacionalNum a=(RacionalNum) r;
+        this.numerador = this.numerador * a.denominador;
+        this.denominador = this.denominador * a.numerador;
+        this.simplificarFraccion();
+    }
+    public boolean repOk(){
+        return this.denominador != 0;   
+    }
+    public String toString(){
+        return this.numerador + "/" + this.denominador; 
+    }
+
+    private int maximoComunDivisor(int a, int b) {
+        int aux;
+        while (b != 0) {
+            aux = b;
+            b = a % b;
+            a = aux;
+        }
+        return a;
+    }
+
+    private int minimoComunMultiplo(int a, int b) {
+        if (a == 0 || b == 0) {
+            return 0;
+        }
+        return Math.abs(a * b) / maximoComunDivisor(a, b);
+    }
+
+
+    private void simplificarFraccion(){
+        int mcd = this.maximoComunDivisor(numerador, denominador);
+        this.numerador /= mcd;
+        this.denominador /= mcd;
+    }
 }
