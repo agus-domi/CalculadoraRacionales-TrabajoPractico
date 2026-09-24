@@ -1,4 +1,3 @@
-
 public class RacionalNum implements Racional {
   // atributos
   private int numerador;
@@ -11,6 +10,7 @@ public class RacionalNum implements Racional {
       throw new IllegalArgumentException("El denominador no puede ser cero.");
     }
     this.denominador = denominador;
+    simplificarFraccion();
   }
 
   public RacionalNum(int numerador) {
@@ -29,7 +29,7 @@ public class RacionalNum implements Racional {
       this.numerador = nuevoNum;
       this.denominador = nuevoDen;
     }
-
+    simplificarFraccion();
   }
 
   public void mult(Racional r) {
@@ -37,7 +37,6 @@ public class RacionalNum implements Racional {
     this.numerador = this.numerador * a.numerador;
     this.denominador = this.denominador * a.denominador;
     this.simplificarFraccion();
-
   }
 
   public void neg() {
@@ -67,12 +66,17 @@ public class RacionalNum implements Racional {
       b = a % b;
       a = aux;
     }
-    return a;
+    return Math.abs(a);
   }
 
   private void simplificarFraccion() {
     int mcd = this.maximoComunDivisor(numerador, denominador);
     this.numerador /= mcd;
     this.denominador /= mcd;
+
+    if (this.denominador < 0) {
+      this.numerador = -this.numerador;
+      this.denominador = -this.denominador;
+    }
   }
 }
